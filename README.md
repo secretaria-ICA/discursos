@@ -227,9 +227,11 @@ Para visualizar o resultado do LDA, utiliza-se a biblioteca pyLDAvis:
 O modelo apresentou uma acurácia de 94.02% na base de treinamento e de 79.56% na de teste. Apesar de não estar explicitado neste trabalho, diversas combinações entre parâmetros foram utilizadas e apesar deste ter sido a melhor acurária para a base de teste, esta métrica oscilou na maior parte das rodadas entre 60 e 78%.
 
 Evolução do treinamento:
+
 ![acurácia espectro](acuracia_espectro.png "Acurácia espectro")
 
 Matriz de confusão:
+
 ![matriz de confusão espectro](matriz_espectro.png "Matriz de confusão espectro")
 
 
@@ -238,17 +240,21 @@ Matriz de confusão:
 Apesar da base de discursos ter sido estratificada (descuidadamente) somente por espectro, quanto a gênero os datasets de treino e teste mantiveram aparentemente a mesma proporção:
 
 Base de treino:
+
 ![treino gênero](treino_genero.png "Treino gênero")
 
 Base de teste:
+
 ![teste gênero](teste_genero.png "Teste gênero")
 
 Para a base de treino o modelo apresentou uma acurácia de 99% e na base de teste 94%:
 
 Evolução do treinamento:
+
 ![acurácia gênero](acuracia_genero.png "Acurácia gênero")
 
 Matriz de confusão:
+
 ![matriz de confusão gênero](matriz_genero.png "Matriz de confusão gênero")
 
 ### 4. Conclusões
