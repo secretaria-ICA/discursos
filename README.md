@@ -241,11 +241,11 @@ Apesar da base de discursos ter sido estratificada (descuidadamente) somente por
 
 Base de treino:
 
-![treino gênero](treino_genero.png "Treino gênero")
+![treino gênero](treino_genero.jpg "Treino gênero")
 
 Base de teste:
 
-![teste gênero](teste_genero.png "Teste gênero")
+![teste gênero](teste_genero.jpg "Teste gênero")
 
 Para a base de treino o modelo apresentou uma acurácia de 99% e na base de teste 94%:
 
