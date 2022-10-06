@@ -182,9 +182,18 @@ model100.wv.most_similar(['eleição',], topn=10)
  ('disputa', 0.37556082010269165)]
  ```
 
- Aqui não foram apresentados os gráficos do PCA pois no instante da confecção deste documento o Google Colab apresentava algum erro para exibição dos mesmos no notebook.
-
- ![erro no colab](erro_colab.png "erro colab")
+ Exemplo de visualização com PCA de 50 para 3 dimensões:
+ 
+ ![pca 50](pca_50.png "pca 50")
+ 
+ Exemplo de visualização com PCA de 100 para 3 dimensões:
+ 
+ ![pca 100](pca_100.png "pca 100")
+ 
+ Exemplo de visualização com PCA de 300 para 3 dimensões:
+ 
+ ![pca 300](pca_300.png "pca 300")
+ 
 
 #### [Classificação automática de discursos com LDA e Nuvem de palavras](04_nlp_discursos_camara_LDA.ipynb)
 
