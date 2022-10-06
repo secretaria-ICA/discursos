@@ -13,10 +13,10 @@ Trabalho apresentado ao curso [BI MASTER](https://ica.puc-rio.ai/bi-master) como
   - [Teste do embedding] (03_nlp_discursos_camara_w2v_similaridade_e_PCA.ipynb)
   - [Classificação automática de discursos com LDA e Nuvem de palavras] (04_nlp_discursos_camara_LDA.ipynb)
   - [Separação e preparo das bases de treino e teste para classificadores] (05_nlp_discursos_camara_separacao_discursos.ipynb)
-  - [Classficador dos discurssos por aspecto político (esquerda, centro e direita)](06_01_nlp_discursos_camara_classficador_por_espectro_esq_cen_dir.ipynb)
+  - [Classficador dos discurssos por espectro político (esquerda, centro e direita)](06_01_nlp_discursos_camara_classficador_por_espectro_esq_cen_dir.ipynb)
   - [Classificador dos discursos por gênero do discursante] (06_02_nlp_discursos_camara_classficador_por_genero.ipynb)
 
-- [Dados extraídos e modelos obtidos] ()
+- [Dados extraídos e modelos obtidos] (https://drive.google.com/drive/folders/1-5KmIeVTRsBUq6oOkMQVGGQxvrMhqdMJ?usp=sharing)
   Para quem quiser utilizar os dados e não estiver disposto a passar por toda as fases de extração, os dados, bem como os modelos gerados estão disponíveis no link acima.
 
 ---
@@ -59,52 +59,74 @@ Para uso em fases posteriores, faz-se o embedding em Word2Vector a partir de tod
 
 Para cada discurso, foram calculadas as sentenças, os tokens e os lemmas. Em seguida, faz-se uma breve análise dos tokens mais frequentes e então são criados os embeddings de dimensões 50, 100 e 300. Para a criação dos embeddings utiliza-se uma janela de tamanho 10 e uma ocorrência mínima do token de 5.
 
-#### [Classificação automática de discursos com LDA e Nuvem de palavras] (04_nlp_discursos_camara_LDA.ipynb)
-
-##### Nuvem de palavras
-
-Para a nuvem de palavras descartou-se alguns tokens muito comuns no início dos discursos e pronomes de tratamento, como:
-
-```
-    'sr', 'sra', 'srs', 'sras', 'a', 'e', 'o', 'as', 'os', 'da', 'de', 'do', \
-    'das', 'dos', 'à', 'às', 'um', 'uma', 'uns', 'umas', 'ao', 'aos', \
-    'presidente', 'quero', 'obrigado', 'importante', 'importantes', 'momento', \ 'governo', 'nº', 'parabéns', 'parabenizar', 'casa', 'deputado', \
-    'deputados', 'agradecer', 'senhor', 'senhora', 'senhores', 'senhoras', \
-```
-
-Calculou-se os bigramas e trigramas presentes nos discursos. E então antes de gerar a nuvem de palavras, filtrou-se os tokens em somente substantivos e verbos utilizando-se o PoS tagging da biblioteca Spacy.
-
-![nuvem de palavras 1](wordcloud_1.png "wordcloud_1.png")
-
-Após filtragem de tokens com ocorrência mínima de 3, e não mais frequentes do que em 5% dos discursos:
-
-![nuvem de palavras 2](wordcloud_1.png "wordcloud_2.png")
-
-###### LDA
-
-Após uma busca de hiperparâmetros baseada no valor de coerência (coherence_score = 0.395099), o LDA foi executado com:
-
-```
-k = 12 # (quantidade de tópicos);
-alpha = 1; e 
-beta = 0.5
-```
-
-Para visualizar o resultado do LDA, utiliza-se a biblioteca pyLDAvis:
-
-
-
-
 #### [Separação e preparo das bases de treino e teste para classificadores] (05_nlp_discursos_camara_separacao_discursos.ipynb)
 
+A fim de estar sempre utilizando o mesmo dataset nas várias e várias diferentes execuções de modelos com diferentes parâmetros, fez-se necessário a padronização da criação do dataset final a ser usado.
 
-#### [Classficador dos discurssos por aspecto político (esquerda, centro e direita)](06_01_nlp_discursos_camara_classficador_por_espectro_esq_cen_dir.ipynb)
+Para buscar discursos com um conjunto de tokens pudessem oferecer um melhor resultado, testou-se várias faixas de tamanho de discurso, finalizando com discursos de tamanho máximo de 1000 tokens e com o mínimo de 250 tokens.
 
+E para facilitar ainda mais a busca de alguma coerência, resolveu-se descartar, a princípio, discursos de partidos considerados de áreas menos deterministícas do espectro: extrema-direita, extrema-esquerda, centro-direita e centro-esquerda. Portanto, no dataset final, só são considerados os espectros: direita, esquerda e centro.
 
-#### [Classificador dos discursos por gênero do discursante] (06_02_nlp_discursos_camara_classficador_por_genero.ipynb)
+O dataset é então separado em treino e teste pela função train_test_split da bibilioteca Sklearn, de forma estratificada, garantindo a proporção das classes de espectros entre treino e teste.
 
+#### [Classficador dos discurssos por espectro político (esquerda, centro e direita)](06_01_nlp_discursos_camara_classficador_por_espectro_esq_cen_dir.ipynb) e [Classificador dos discursos por gênero do discursante] (06_02_nlp_discursos_camara_classficador_por_genero.ipynb)
 
+Em ambos os casos, usou-se uma rede RNN. No futuro é interessante tentar comparar os resultados com redes densas somente, bem como modelos de SVM e Árvores de decisão. A única diferença das redes é o tamanho da camada de saída, de forma que para classificar por espectro são de tamanho 3, e para gênero, 2.
 
+Para os treinamentos das redes o embedding de dimensão 100 foi o escolhido por apresentar resultados um pouco melhores que o de dimensão 50. O de dimensão 300 não foi utilizado pois gerava um altíssimo uso de memória.
+
+Os parêmetros da rede são:
+
+```
+BATCH_SIZE = 200
+EPOCHS = 250
+PATIENCE_LR = 25
+PATIENCE_ES = 50
+FACTOR = 0.25
+MIN_LR = 0.00000001
+PLATEAU_MONITOR = 'val_categorical_crossentropy'
+LSTM_LAYER1_SIZE = EMBEDDINGS_DIM
+LSTM_LAYER2_SIZE = EMBEDDINGS_DIM
+LAYER1_DROPOUT_RATE = 0.1
+LAYER2_DROPOUT_RATE = 0.25
+RECURRENT_DROPOUT_RATE = 0.2
+DENSE_LAYER1_SIZE = EMBEDDINGS_DIM
+DENSE_LAYER1_DROPOUT_RATE = 0.5
+DENSE_LAYER2_SIZE = EMBEDDINGS_DIM
+DENSE_LAYER1_FUNCTION = 'tanh'
+OUTPUT_LAYER_SIZE = len(ESPECTROS)
+OUTPUT_LAYER_FUNCTION = 'softmax'
+LEARNING_RATE = 0.0001
+OPTIMIZER = tensorflow.keras.optimizers.Adam
+LOSS_FUNCTION = 'categorical_crossentropy'
+METRIC_FUNCTIONS = ['categorical_accuracy', 'categorical_crossentropy']
+VALIDATION_SPLIT_RATE = 0.2
+
+# Modelo
+model = Sequential()
+
+# INPUT
+model.add(Embedding(MAX_FEATURES+1, output_dim = EMBEDDINGS_DIM, weights = [embeddings_matrix], input_length = MAX_DOC_LEN, trainable = True, mask_zero=True))
+
+# LSTM 1
+model.add(Bidirectional(LSTM(LSTM_LAYER1_SIZE, return_sequences = True,  dropout = LAYER1_DROPOUT_RATE)))
+
+# LSTM 2
+model.add(Bidirectional(LSTM(LSTM_LAYER2_SIZE, dropout = LAYER2_DROPOUT_RATE, recurrent_dropout = RECURRENT_DROPOUT_RATE)))
+
+# Dense 1
+model.add(Dense(units = DENSE_LAYER1_SIZE, activation = DENSE_LAYER1_FUNCTION))
+model.add(Dropout(DENSE_LAYER1_DROPOUT_RATE))
+
+# Dense 2
+model.add(Dense(DENSE_LAYER2_SIZE))
+
+# Output
+model.add(Dense(units = OUTPUT_LAYER_SIZE, activation = OUTPUT_LAYER_FUNCTION))
+
+# Compile
+model.compile(optimizer = OPTIMIZER(learning_rate = LEARNING_RATE), loss = LOSS_FUNCTION, metrics = METRIC_FUNCTIONS)
+```
 
 ### 3. Resultados
 
@@ -160,17 +182,72 @@ model100.wv.most_similar(['eleição',], topn=10)
  ('disputa', 0.37556082010269165)]
  ```
 
+#### [Classificação automática de discursos com LDA e Nuvem de palavras] (04_nlp_discursos_camara_LDA.ipynb)
 
+##### Nuvem de palavras
+
+Para a nuvem de palavras descartou-se alguns tokens muito comuns no início dos discursos e pronomes de tratamento, como:
+
+```
+    'sr', 'sra', 'srs', 'sras', 'a', 'e', 'o', 'as', 'os', 'da', 'de', 'do', \
+    'das', 'dos', 'à', 'às', 'um', 'uma', 'uns', 'umas', 'ao', 'aos', \
+    'presidente', 'quero', 'obrigado', 'importante', 'importantes', 'momento', \ 'governo', 'nº', 'parabéns', 'parabenizar', 'casa', 'deputado', \
+    'deputados', 'agradecer', 'senhor', 'senhora', 'senhores', 'senhoras', \
+```
+
+Calculou-se os bigramas e trigramas presentes nos discursos. E então antes de gerar a nuvem de palavras, filtrou-se os tokens em somente substantivos e verbos utilizando-se o PoS tagging da biblioteca Spacy.
+
+![nuvem de palavras 1](wordcloud_1.png "wordcloud_1.png")
+
+Após filtragem de tokens com ocorrência mínima de 3, e não mais frequentes do que em 5% dos discursos:
+
+![nuvem de palavras 2](wordcloud_1.png "wordcloud_2.png")
+
+###### LDA
+
+Após uma busca de hiperparâmetros baseada no valor de coerência (coherence_score = 0.395099), o LDA foi executado com:
+
+```
+k = 12 # (quantidade de tópicos);
+alpha = 1; e 
+beta = 0.5
+```
+
+Para visualizar o resultado do LDA, utiliza-se a biblioteca pyLDAvis:
+
+![lda](lda.png "LDA")
+
+
+#### [Classficador dos discurssos por espectro político (esquerda, centro e direita)](06_01_nlp_discursos_camara_classficador_por_espectro_esq_cen_dir.ipynb) 
+
+O modelo apresentou uma acurácia de 94.02% na base de treinamento e de 79.56% na de teste. Apesar de não estar explicitado neste trabalho, diversas combinações entre parâmetros foram utilizadas e apesar deste ter sido a melhor acurária para a base de teste, esta métrica oscilou na maior parte das rodadas entre 60 e 78%.
+
+![acurácia espectro](acuracia_espectro.png "Acurácia espectro")
+
+![matriz de confusão espectro](matriz_espectro.png "Matriz de confusão espectro")
+
+
+#### [Classificador dos discursos por gênero do discursante] (06_02_nlp_discursos_camara_classficador_por_genero.ipynb)
+
+Apesar da base de discursos ter sido estratificada (descuidadamente) somente por espectro, quanto a gênero os datasets de treino e teste mantiveram aparentemente a mesma proporção:
+
+![treino gênero](treino_genero.png "Treino gênero")
+
+![teste gênero](teste_genero.png "Teste gênero")
+
+Para a base de treino o modelo apresentou uma acurácia de 99% e na base de teste 94%:
+
+![acurácia gênero](acuracia_genero.png "Acurácia gênero")
+
+![matriz de confusão gênero](matriz_genero.png "Matriz de confusão gênero")
 
 ### 4. Conclusões
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar nisl vestibulum tortor fringilla, eget imperdiet neque condimentum. Proin vitae augue in nulla vehicula porttitor sit amet quis sapien. Nam rutrum mollis ligula, et semper justo maximus accumsan. Integer scelerisque egestas arcu, ac laoreet odio aliquet at. Sed sed bibendum dolor. Vestibulum commodo sodales erat, ut placerat nulla vulputate eu. In hac habitasse platea dictumst. Cras interdum bibendum sapien a vehicula.
 
-Proin feugiat nulla sem. Phasellus consequat tellus a ex aliquet, quis convallis turpis blandit. Quisque auctor condimentum justo vitae pulvinar. Donec in dictum purus. Vivamus vitae aliquam ligula, at suscipit ipsum. Quisque in dolor auctor tortor facilisis maximus. Donec dapibus leo sed tincidunt aliquam.
 
 ---
 
-Matrícula: 123.456.789
+Matrícula: 202.100.270
 
 Pontifícia Universidade Católica do Rio de Janeiro
 
