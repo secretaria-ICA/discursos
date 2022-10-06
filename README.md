@@ -45,21 +45,21 @@ Neste projeto discursos de deputados e deputadas federais do congresso brasileir
 
 ### 2. Modelagem
 
-#### [Extração e análise] (01_nlp_discursos_camara_extracao_e_analise.ipynb)
+#### [Extração e análise](01_nlp_discursos_camara_extracao_e_analise.ipynb)
 
-O primeiro passo é obter a lista das [legislaturas com dados disponíveis no site da câmara] (https://dadosabertos.camara.leg.br/arquivos/legislaturas/csv/legislaturas.csv), utilizando a biblioteca Pandas para ler os arquivos CSV. Em seguida obtem-se a [listagem dos parlamentares que já integraram a câmara] (https://dadosabertos.camara.leg.br/arquivos/deputados/csv/deputados.csv). De posse da listagem de legislaturas e dos parlamentares, obtem-se as [transcrições dos discursos](https://dadosabertos.camara.leg.br/api/v2/deputados/{idDeputado}/discursos?idLegislatura={idLegislatura}&ordenarPor=dataHoraInicio&ordem=ASC). Da listagem de deputados obtem-se a url que contém as informações detalhadas do parlamentar, tais como, CPF, partido, escolaridade, sexo, etc. 
+O primeiro passo é obter a lista das [legislaturas com dados disponíveis no site da câmara](https://dadosabertos.camara.leg.br/arquivos/legislaturas/csv/legislaturas.csv), utilizando a biblioteca Pandas para ler os arquivos CSV. Em seguida obtem-se a [listagem dos parlamentares que já integraram a câmara](https://dadosabertos.camara.leg.br/arquivos/deputados/csv/deputados.csv). De posse da listagem de legislaturas e dos parlamentares, obtem-se as [transcrições dos discursos](https://dadosabertos.camara.leg.br/api/v2/deputados/{idDeputado}/discursos?idLegislatura={idLegislatura}&ordenarPor=dataHoraInicio&ordem=ASC). Da listagem de deputados obtem-se a url que contém as informações detalhadas do parlamentar, tais como, CPF, partido, escolaridade, sexo, etc. 
 
-O espectro político dos partidos não está em nenhuma das fontes mencionadas acima. Através de pesquisa em [pt.wikipedia.org] (https://pt.wikipedia.org) e congressoemfoco.uol.com.br(https://congressoemfoco.uol.com.br/area/governo/exclusivo-os-12-partidos-que-formam-a-base-fiel-do-governo-na-camara/) fez-se a associção manual entre partidos e o espectro político predominante. 
+O espectro político dos partidos não está em nenhuma das fontes mencionadas acima. Através de pesquisa em [pt.wikipedia.org](https://pt.wikipedia.org) e congressoemfoco.uol.com.br(https://congressoemfoco.uol.com.br/area/governo/exclusivo-os-12-partidos-que-formam-a-base-fiel-do-governo-na-camara/) fez-se a associção manual entre partidos e o espectro político predominante. 
 
 Em uma última etapa essas informações são unificadas em um único dataframe Pandas e gravada em arquivo para uso posterior.
 
-#### [Geração de embedding] (02_nlp_discursos_camara_w2v.ipynb)
+#### [Geração de embedding](02_nlp_discursos_camara_w2v.ipynb)
 
 Para uso em fases posteriores, faz-se o embedding em Word2Vector a partir de todos os discursos obtidos na etapa anterior. 
 
 Para cada discurso, foram calculadas as sentenças, os tokens e os lemmas. Em seguida, faz-se uma breve análise dos tokens mais frequentes e então são criados os embeddings de dimensões 50, 100 e 300. Para a criação dos embeddings utiliza-se uma janela de tamanho 10 e uma ocorrência mínima do token de 5.
 
-#### [Separação e preparo das bases de treino e teste para classificadores] (05_nlp_discursos_camara_separacao_discursos.ipynb)
+#### [Separação e preparo das bases de treino e teste para classificadores](05_nlp_discursos_camara_separacao_discursos.ipynb)
 
 A fim de estar sempre utilizando o mesmo dataset nas várias e várias diferentes execuções de modelos com diferentes parâmetros, fez-se necessário a padronização da criação do dataset final a ser usado.
 
@@ -69,7 +69,7 @@ E para facilitar ainda mais a busca de alguma coerência, resolveu-se descartar,
 
 O dataset é então separado em treino e teste pela função train_test_split da bibilioteca Sklearn, de forma estratificada, garantindo a proporção das classes de espectros entre treino e teste.
 
-#### [Classficador dos discurssos por espectro político (esquerda, centro e direita)](06_01_nlp_discursos_camara_classficador_por_espectro_esq_cen_dir.ipynb) e [Classificador dos discursos por gênero do discursante] (06_02_nlp_discursos_camara_classficador_por_genero.ipynb)
+#### [Classficador dos discurssos por espectro político (esquerda, centro e direita)](06_01_nlp_discursos_camara_classficador_por_espectro_esq_cen_dir.ipynb) e [Classificador dos discursos por gênero do discursante](06_02_nlp_discursos_camara_classficador_por_genero.ipynb)
 
 Em ambos os casos, usou-se uma rede RNN. No futuro é interessante tentar comparar os resultados com redes densas somente, bem como modelos de SVM e Árvores de decisão. A única diferença das redes é o tamanho da camada de saída, de forma que para classificar por espectro são de tamanho 3, e para gênero, 2.
 
@@ -130,7 +130,7 @@ model.compile(optimizer = OPTIMIZER(learning_rate = LEARNING_RATE), loss = LOSS_
 
 ### 3. Resultados
 
-#### [Teste do embedding] (03_nlp_discursos_camara_w2v_similaridade_e_PCA.ipynb)
+#### [Teste do embedding](03_nlp_discursos_camara_w2v_similaridade_e_PCA.ipynb)
 
 Após a criação dos embeddings, faz-se uma análise da qualidade dos mesmos, utilizando-se tanto uma inspeção visual com a distribuição espacial dos tokens com a aplicação de PCA, como alguns exemplos de similaridades pelo cálculo do coseno dos vetores que representam os tokens.
 
@@ -182,7 +182,7 @@ model100.wv.most_similar(['eleição',], topn=10)
  ('disputa', 0.37556082010269165)]
  ```
 
-#### [Classificação automática de discursos com LDA e Nuvem de palavras] (04_nlp_discursos_camara_LDA.ipynb)
+#### [Classificação automática de discursos com LDA e Nuvem de palavras](04_nlp_discursos_camara_LDA.ipynb)
 
 ##### Nuvem de palavras
 
@@ -227,7 +227,7 @@ O modelo apresentou uma acurácia de 94.02% na base de treinamento e de 79.56% n
 ![matriz de confusão espectro](matriz_espectro.png "Matriz de confusão espectro")
 
 
-#### [Classificador dos discursos por gênero do discursante] (06_02_nlp_discursos_camara_classficador_por_genero.ipynb)
+#### [Classificador dos discursos por gênero do discursante](06_02_nlp_discursos_camara_classficador_por_genero.ipynb)
 
 Apesar da base de discursos ter sido estratificada (descuidadamente) somente por espectro, quanto a gênero os datasets de treino e teste mantiveram aparentemente a mesma proporção:
 
