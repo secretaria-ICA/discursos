@@ -182,6 +182,10 @@ model100.wv.most_similar(['eleição',], topn=10)
  ('disputa', 0.37556082010269165)]
  ```
 
+ Aqui não foram apresentados os gráficos do PCA pois no instante da confecção deste documento o Google Colab apresentava algum erro para exibição dos mesmos no notebook.
+
+ ![erro no colab](erro_colab.png "erro colab")
+
 #### [Classificação automática de discursos com LDA e Nuvem de palavras](04_nlp_discursos_camara_LDA.ipynb)
 
 ##### Nuvem de palavras
@@ -222,8 +226,10 @@ Para visualizar o resultado do LDA, utiliza-se a biblioteca pyLDAvis:
 
 O modelo apresentou uma acurácia de 94.02% na base de treinamento e de 79.56% na de teste. Apesar de não estar explicitado neste trabalho, diversas combinações entre parâmetros foram utilizadas e apesar deste ter sido a melhor acurária para a base de teste, esta métrica oscilou na maior parte das rodadas entre 60 e 78%.
 
+Evolução do treinamento:
 ![acurácia espectro](acuracia_espectro.png "Acurácia espectro")
 
+Matriz de confusão:
 ![matriz de confusão espectro](matriz_espectro.png "Matriz de confusão espectro")
 
 
@@ -231,19 +237,33 @@ O modelo apresentou uma acurácia de 94.02% na base de treinamento e de 79.56% n
 
 Apesar da base de discursos ter sido estratificada (descuidadamente) somente por espectro, quanto a gênero os datasets de treino e teste mantiveram aparentemente a mesma proporção:
 
+Base de treino:
 ![treino gênero](treino_genero.png "Treino gênero")
 
+Base de teste:
 ![teste gênero](teste_genero.png "Teste gênero")
 
 Para a base de treino o modelo apresentou uma acurácia de 99% e na base de teste 94%:
 
+Evolução do treinamento:
 ![acurácia gênero](acuracia_genero.png "Acurácia gênero")
 
+Matriz de confusão:
 ![matriz de confusão gênero](matriz_genero.png "Matriz de confusão gênero")
 
 ### 4. Conclusões
 
+#### LDA
 
+Apesar da quantidade de tópicos ter sido calculada por valores de coerência dos diversos modelos gerados na busca de hiperparâmetros, alguns tópicos são um pouco mais difíceis de entender, apesar do gráfico do LDA mostrar os grupos de tópicos bastante distintos sem zonas de intersecção. Ainda assim, é possível considerar o modelo como um gerador de automático de tags, muito comum em sistemas de indexação de documentos.
+
+#### Classificador de discurso por espectro político
+
+A acurácia do modelo para base de teste ficou em aproximadamente 79% e pela matriz de confusão pode-se dizer que a maior dificuldade está na inferência dos discursos de centro. Considerando a flutuação de interesses políticos deste grupo na câmara de deputados, talvez não seja uma surpresa a dificuldade do modelo encontrar um padrão comum para esta classe. Note que para as classes de direita e esquerda, o modelo apresenta uma performance muito melhor, indicando um posicionamento mais coerente dos parlamentares pertencentes a essas classes em seus discursos.
+
+#### Classificador de discurso por gênero
+
+Com uma acurácia de 90%, o modelo surpreendentemente apresentou facilidade em identificar discursos proferidos por homens e mulheres na câmara federal. Apesar de isso parecer indicar uma grande diferença entre discursos de deputadas e deputados, por outro lado, pode-se deduzir que os discursos das deputadas estão mais alinhados entre si, permitindo que o modelo pudesse encontrar correlação que os caracterizasse com um grupo. Além disso, pode-se também perceber que os discuros das parlamentares femininas não estão contaminados pelo ambiente predominamente masculino. 
 
 ---
 
