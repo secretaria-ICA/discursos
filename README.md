@@ -1,7 +1,7 @@
 # Análise de discursos de deputados e deputadas federais através de técnicas de NLP e machine learning
 
 #### Aluno: [Rodrigo Montenegro de Oliveira](https://github.com/rmontenegroo)
-#### Orientador: [Dr. Leonardo Forero Mendoza] (https://www.linkedin.com/in/leonardo-alfredo-forero-mendoza-53803159/)
+#### Orientador: [Dr. Leonardo Forero Mendoza](https://www.linkedin.com/in/leonardo-alfredo-forero-mendoza-53803159/)
 
 ---
 
