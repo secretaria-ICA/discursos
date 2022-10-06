@@ -184,15 +184,15 @@ model100.wv.most_similar(['eleição',], topn=10)
 
  Exemplo de visualização com PCA de 50 para 3 dimensões:
  
- ![pca 50](pca_50.png "pca 50")
+ ![pca 50](pca_50.jpg "pca 50")
  
  Exemplo de visualização com PCA de 100 para 3 dimensões:
  
- ![pca 100](pca_100.png "pca 100")
+ ![pca 100](pca_100.jpg "pca 100")
  
  Exemplo de visualização com PCA de 300 para 3 dimensões:
  
- ![pca 300](pca_300.png "pca 300")
+ ![pca 300](pca_300.jpg "pca 300")
  
 
 #### [Classificação automática de discursos com LDA e Nuvem de palavras](04_nlp_discursos_camara_LDA.ipynb)
