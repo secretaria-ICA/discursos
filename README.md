@@ -7,16 +7,16 @@
 
 Trabalho apresentado ao curso [BI MASTER](https://ica.puc-rio.ai/bi-master) como pré-requisito para conclusão de curso e obtenção de crédito na disciplina "Projetos de Sistemas Inteligentes de Apoio à Decisão".
 
-- [Link para o código](https://github.com/rmontenegroo/discursos)
-  - [Extração e análise] (01_nlp_discursos_camara_extracao_e_analise.ipynb)
-  - [Geração de embedding] (02_nlp_discursos_camara_w2v.ipynb)
-  - [Teste do embedding] (03_nlp_discursos_camara_w2v_similaridade_e_PCA.ipynb)
-  - [Classificação automática de discursos com LDA e Nuvem de palavras] (04_nlp_discursos_camara_LDA.ipynb)
-  - [Separação e preparo das bases de treino e teste para classificadores] (05_nlp_discursos_camara_separacao_discursos.ipynb)
+- [Código](https://github.com/rmontenegroo/discursos)
+  - [Extração e análise](01_nlp_discursos_camara_extracao_e_analise.ipynb)
+  - [Geração de embedding](02_nlp_discursos_camara_w2v.ipynb)
+  - [Teste do embedding](03_nlp_discursos_camara_w2v_similaridade_e_PCA.ipynb)
+  - [Classificação automática de discursos com LDA e Nuvem de palavras](04_nlp_discursos_camara_LDA.ipynb)
+  - [Separação e preparo das bases de treino e teste para classificadores](05_nlp_discursos_camara_separacao_discursos.ipynb)
   - [Classficador dos discurssos por espectro político (esquerda, centro e direita)](06_01_nlp_discursos_camara_classficador_por_espectro_esq_cen_dir.ipynb)
-  - [Classificador dos discursos por gênero do discursante] (06_02_nlp_discursos_camara_classficador_por_genero.ipynb)
+  - [Classificador dos discursos por gênero do discursante](06_02_nlp_discursos_camara_classficador_por_genero.ipynb)
 
-- [Dados extraídos e modelos obtidos] (https://drive.google.com/drive/folders/1-5KmIeVTRsBUq6oOkMQVGGQxvrMhqdMJ?usp=sharing)
+- [Dados extraídos e modelos obtidos](https://drive.google.com/drive/folders/1-5KmIeVTRsBUq6oOkMQVGGQxvrMhqdMJ?usp=sharing)
   Para quem quiser utilizar os dados e não estiver disposto a passar por toda as fases de extração, os dados, bem como os modelos gerados estão disponíveis no link acima.
 
 ---
@@ -29,19 +29,19 @@ Neste projeto discursos de deputados e deputadas federais do congresso brasileir
 
  É quase senso comum que é difícil encontrar coerência entre o discurso e o alinhamento político de muitos dos nossos representantes no congresso e demais poderes. Uma vez que os discursos na câmara federal foram transcritos e disponibilizados, colocamos essa coerência, ou falta dela, a prova, empregando técnicas de mineração de dados, NLP e machine learning.
 
- Na primeira etapa do projeto [01_nlp_discursos_camara_extracao_e_analise] (01_nlp_discursos_camara_extracao_e_analise.ipynb) é feita a extração dos dados: discursos e perfis dos deputados e deputadas do congresso. Em posse desses dados, faz-se uma breve análise sobre as características dos discursantes.
+ Na primeira etapa do projeto [01_nlp_discursos_camara_extracao_e_analise](01_nlp_discursos_camara_extracao_e_analise.ipynb) é feita a extração dos dados: discursos e perfis dos deputados e deputadas do congresso. Em posse desses dados, faz-se uma breve análise sobre as características dos discursantes.
 
- Em [02_nlp_discursos_camara_w2v] os discursos obtidos na etapa anterior são processados e são gerados os embeddings Word2Vector que são utilizados em praticamente todas as etapas seguintes.
+ Em [02_nlp_discursos_camara_w2v](02_nlp_discursos_camara_w2v.ipynb) os discursos obtidos na etapa anterior são processados e são gerados os embeddings Word2Vector que são utilizados em praticamente todas as etapas seguintes.
 
  Para avaliar a qualidade do embedding gerado na etapa 02, na etapa [03_nlp_discursos_camara_w2v_similaridade_e_PCA](03_nlp_discursos_camara_w2v_similaridade_e_PCA.ipynb) são aplicados o PCA para observar a distribuição dos tokens em relação aos seu pares, e também são realizados alguns testes de similaridade através do cálculo do coseno entre os vetores.
 
- Na etapa [04_nlp_discursos_camara_LDA.ipynb] (04_nlp_discursos_camara_LDA.ipynb) é aplicado o algoritmo de LDA sobre os discursos para se obter uma classificação não supervisionada dos mesmos. Aqui também emprega-se nuvem de palavras para se visualizar os principais tokens presentes nos discursos e identificar eventuais distorções.
+ Na etapa [04_nlp_discursos_camara_LDA.ipynb](04_nlp_discursos_camara_LDA.ipynb) é aplicado o algoritmo de LDA sobre os discursos para se obter uma classificação não supervisionada dos mesmos. Aqui também emprega-se nuvem de palavras para se visualizar os principais tokens presentes nos discursos e identificar eventuais distorções.
 
- Para as etapas de classificação supervisionada que virão em seguida é necessário separar a base de discursos em treino e teste para que sejam apresentadas aos classificadores. Esse exercício da separação das bases foi realizado aqui em [05_nlp_discursos_camara_separacao_discursos] (05_nlp_discursos_camara_separacao_discursos.ipynb).
+ Para as etapas de classificação supervisionada que virão em seguida é necessário separar a base de discursos em treino e teste para que sejam apresentadas aos classificadores. Esse exercício da separação das bases foi realizado aqui em [05_nlp_discursos_camara_separacao_discursos](05_nlp_discursos_camara_separacao_discursos.ipynb).
 
  Para tentar encontrar alguma relação entre o conteúdo dos discursos e o espectro político do partido do discursante, na etapa [06_01_nlp_discursos_camara_classficador_por_espectro_esq_cen_dir](06_01_nlp_discursos_camara_classficador_por_espectro_esq_cen_dir.ipynb) apresenta-se a uma rede RNN os discursos proferidos na última legislatura.
 
- E para verificar se seria possível identificar o gênero do discursante apenas pelo discurso, aplica-se o mesmo conjunto da base anterior contra a mesma rede RNN da etapa anterior, aqui em [06_02_nlp_discursos_camara_classficador_por_genero] (06_02_nlp_discursos_camara_classficador_por_genero.ipynb).
+ E para verificar se seria possível identificar o gênero do discursante apenas pelo discurso, aplica-se o mesmo conjunto da base anterior contra a mesma rede RNN da etapa anterior, aqui em [06_02_nlp_discursos_camara_classficador_por_genero](06_02_nlp_discursos_camara_classficador_por_genero.ipynb).
 
 ### 2. Modelagem
 
