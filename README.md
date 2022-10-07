@@ -214,7 +214,7 @@ Calculou-se os bigramas e trigramas presentes nos discursos. E então antes de g
 
 Após filtragem de tokens com ocorrência mínima de 3, e não mais frequentes do que em 5% dos discursos:
 
-![nuvem de palavras 2](wordcloud_1.png "wordcloud_2.png")
+![nuvem de palavras 2](wordcloud_2.png "wordcloud_2.png")
 
 ###### LDA
 
